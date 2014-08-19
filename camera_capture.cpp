@@ -7,5 +7,6 @@ using namespace std;
 
 int main ()
 {
-	execlp("raspistill", "raspistill", "-n", "-w", "640", "-h", "480", "-o", ".home/pi/camera/capture.jpg", "-t", "1", NULL);
+	// Manually captures a frame when the program is called.
+	system("/home/pi/raspifastcam/do_capture.sh")
 }
