@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cv.h>
 #include <highgui.h>
+#include <time.h>
 
 using namespace cv;
 using namespace std;
@@ -21,10 +22,15 @@ int main()
 
 	// Extract a frame and Analyse
 	Mat gray_frame, thres_frame, frame;
-	int radius;
+	int radius, cycle=0;
+	clock_t clk1;
 
 	for(::)
 	{	
+		// Initalize Clock
+		cycle++;
+		clk1 = clock();
+
 		// Extract Frame
 		video >> frame;
 
@@ -46,6 +52,10 @@ int main()
 			circle(gray_frame, center, 5, (255,0,255), -1, 8, 0); 		// Circle on Pupil
 			circle(gray_frame, center, radius, (255,0,255), 3, 8, 0);	// Circle on Center
 		}
+
+		// Find out time taken to process
+		clk1 = clock() - clk1;
+		printf("Cycle: %d - This took %f seconds to perform. \n", cycle, ((float)clk1)/CLOCKS_PER_SEC)
 
 		// Show Frame
 		imshow("frame", frame);
