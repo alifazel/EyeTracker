@@ -21,6 +21,13 @@ int main()
 	Mat frame;
 	noir.read(frame);
 
-	//Write Frame
+	// Image Processing
+	Mat gray_frame, thres_frame; 				// Creates two Mat variables to store transformations
+	int threshold_variable = 150;				// Threshold Variable that can be adjusted.
+	
+	cvtColor(frame, gray_frame, CV_BGR2GRAY);	// Converts image to grayscale
+	threshold(gray_frame, thres_frame, threshold_variable, 255, 0);	// Creates threshold on image
+
+	// Write Frame
 	imwrite("/home/pi/media/savefile.jpg")
 }
