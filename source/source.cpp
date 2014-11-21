@@ -20,7 +20,8 @@ int main()
 	else printf("The Video File has been opened correctly \n");
 
 	// Extract a frame and Analyse
-	Mat frame;
+	Mat gray_frame, thres_frame, frame;
+	int radius;
 
 	for(::)
 	{	
