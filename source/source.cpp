@@ -16,4 +16,11 @@ int main()
 		cout << "Camera failed to initalize";
 		return -1;
 	}
+
+	// Read Frame
+	Mat frame;
+	noir.read(frame);
+
+	//Write Frame
+	imwrite("/home/pi/media/savefile.jpg")
 }
