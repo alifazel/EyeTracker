@@ -26,13 +26,19 @@ int main()
 	int threshold_variable;						// Threshold Variable that can be adjusted.
 
 	cvtColor(frame, gray_frame, CV_BGR2GRAY);	// Converts image to grayscale
-	for(threshold_variable=0; threshold_variable<250; threshold_variable=+10) {
+	
+	int i;
+	for(i=0; i<255; i=+10) {
 
-		threshold(gray_frame, thres_frame, threshold_variable, 255, 0);	// Creates threshold on image
+		threshold(gray_frame, thres_frame, i, 255, 0);	// Creates threshold on image
 
+		// Creates Filename
+		stringstream sstm;
+		string filename = "/home/pi/media/savefile";
+		string suffix = ".jpg"
+		sstm << filename << i << suffix;
 		// Write Frame
-		std::String filename = "/home/pi/media/savefile" + threshold_variable + ".jpg";
-		imwrite(filename);
+		imwrite(sstm.str(), thres_frame;
 	}
 	
 }
