@@ -7,38 +7,35 @@ using namespace std;
 
 int main()
 {
-	// Initialize the Camera Stream with Camera PID 0
-	VideoCapture noir(0) 
+	vector<Vec3f> output_array;
 
-	// Error Catching
-	if(!noir.isOpened())
-	{
-		cout << "Camera failed to initalize";
-		return -1;
-	}
-
-	// Read Frame
 	Mat frame;
-	noir.read(frame);
+	frame = imread("/home/pi/pupilDetect/sample.jpg")
 
 	// Image Processing
 	Mat gray_frame, thres_frame; 				// Creates two Mat variables to store transformations
-	int threshold_variable;						// Threshold Variable that can be adjusted.
+	int threshold_variable = 60;				// Threshold Variable that can be adjusted.
 
 	cvtColor(frame, gray_frame, CV_BGR2GRAY);	// Converts image to grayscale
-	
-	int i;
-	for(i=0; i<255; i=+10) {
+	threshold(gray_frame, thres_frame, threshold_variable, 255, 0);
 
-		threshold(gray_frame, thres_frame, i, 255, 0);	// Creates threshold on image
+	// Analyses Image
+	HoughCircles(thres_frame, output_array, CV_HOUGH_GRADIENT, 2, thres_frame.rows/4, 70, 65);
 
-		// Creates Filename
-		stringstream sstm;
-		string filename = "/home/pi/media/savefile";
-		string suffix = ".jpg"
-		sstm << filename << i << suffix;
-		// Write Frame
-		imwrite(sstm.str(), thres_frame;
+	// Draw Circle on result
+	for(int i=0; i<output_array.size(); i=++) {
+
+		// Defines the points and radius for the circle
+		Point center(cvRound(output_array[i][0]),cvRound(output_array[i][1]));
+		int radius = cvRound(output_array[i][2]);
+
+		// Draws the Circles
+		circle(gray_frame, center, 5, (255,0,255), -1, 8, 0); 		// Circle on Pupil
+		circle(gray_frame, center, radius, (255,0,255), 3, 8, 0);	// Circle on Center
 	}
+
+	imwrite("/home/pi/camera/output.jpg", gray_frame);	// Writes Output
+
+	return 0;
 	
 }
