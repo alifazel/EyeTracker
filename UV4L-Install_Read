@@ -1,0 +1,63 @@
+UV4L Driver - How to install on RPi
+By Linux Projects
+
+This is an extract from the Linux Projects website showing how to install UV4l for OpenCV.
+
+---------------------
+
+To install UV4L open a terminal and type the following commands:
+
+    $ wget http://www.linux-projects.org/listing/uv4l_repo/lrkey.asc && sudo apt-key add ./lrkey.asc
+
+Add the following line to the file /etc/apt/sources.list :
+
+    deb http://www.linux-projects.org/listing/uv4l_repo/raspbian/ wheezy main
+
+    $ sudo apt-get update
+    $ sudo apt-get install uv4l uv4l-raspicam
+
+The last two commands will upgrade UV4L to the most recent version, if it's already installed.
+
+If you want the driver to be loaded at boot, also install this optional package:
+
+    $ sudo apt-get install uv4l-raspicam-extras
+
+As a convenience, the above package will also provide a service script for starting or stopping the driver at any time:
+
+    $ sudo service uv4l_raspicam restart
+
+When (re)starting the service, uv4l will be instructed to parse the configuration file /etc/uv4l/uv4l-raspicam.conf to get the default values for the (main) driver options. You can edit that file as you prefer to add, remove or change the default options. The same service is used at boot.
+
+Now the UV4L core component and the Video4Linux2 driver for the CSI Camera Board are installed. If you occasionally get unexpected errors from the driver, consider updating the firmware with the following command:
+
+    $ sudo rpi-update
+
+For detailed informations, options, etc... about the modules installed type accordingly:
+
+    $ man uv4l
+    $ man uv4l-raspicam
+
+To get a list of available options:
+
+    $ uv4l --help --driver raspicam --driver-help
+
+If you did not install the optional uv4l-raspicam-extras package (which already contains a script for starting uv4l with the settings taken from a configuration file) but want to quicly test uv4l, load it manually:
+
+    $ uv4l --driver raspicam --auto-video_nr --width 640 --height 480 --encoding jpeg
+
+and take a JPEG snapshot from the Camera:
+
+    $ dd if=/dev/video0 of=snapshot.jpeg bs=11M count=1
+
+For a list of other use cases click here.
+
+To terminate a running driver, close the applications and kill the corresponding uv4l process:
+
+    $ pkill uv4l
+
+Apart from the driver for the Raspberry Pi Camera Board, the following modules or drivers can be optionally installed:
+
+    $ sudo apt-get install uv4l-server
+    $ sudo apt-get install uv4l-uvc
+    $ sudo apt-get install uv4l-xscreen
+    $ sudo apt-get install uv4l-mjpegstream
