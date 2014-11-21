@@ -23,11 +23,16 @@ int main()
 
 	// Image Processing
 	Mat gray_frame, thres_frame; 				// Creates two Mat variables to store transformations
-	int threshold_variable = 150;				// Threshold Variable that can be adjusted.
-	
-	cvtColor(frame, gray_frame, CV_BGR2GRAY);	// Converts image to grayscale
-	threshold(gray_frame, thres_frame, threshold_variable, 255, 0);	// Creates threshold on image
+	int threshold_variable;						// Threshold Variable that can be adjusted.
 
-	// Write Frame
-	imwrite("/home/pi/media/savefile.jpg")
+	cvtColor(frame, gray_frame, CV_BGR2GRAY);	// Converts image to grayscale
+	for(threshold_variable=0; threshold_variable<250; threshold_variable=+10) {
+
+		threshold(gray_frame, thres_frame, threshold_variable, 255, 0);	// Creates threshold on image
+
+		// Write Frame
+		std::String filename = "/home/pi/media/savefile" + threshold_variable + ".jpg";
+		imwrite(filename);
+	}
+	
 }
